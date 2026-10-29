@@ -110,7 +110,16 @@ base_case:
     .type combine_helpers, @function
 combine_helpers:
     # TODO: Problem 6
-    movq $0, %rax
+    pushq %rbp
+    movq %rsp, %rbp
+    subq $8, %rsp
+    movq %rsi, -8(%rbp)
+    call helper_square
+    movq -8(%rbp), %rdi
+    movq %rax, -8(%rbp)
+    call helper_affine
+    addq -8(%rbp), %rax
+    leave
     ret
 
     .section .note.GNU-stack,"",@progbits
