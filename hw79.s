@@ -64,6 +64,28 @@ weighted_sum8:
 alternating_sum:
     # TODO: Problem 4
     movq $0, %rax
+    movq $0, %rsi
+    movq $0, %rdx
+    cmpq %rsi, %rdi
+    jle zero_case
+repeat_case:
+    addq $1, %rsi
+    cmpq %rdi, %rsi
+    jg end_case
+    cmpq $0, %rdx
+    je add_case
+    jmp subtract_case
+add_case:
+    addq %rsi, %rax
+    movq $1, %rdx
+    jmp repeat_case
+subtract_case:
+    subq %rsi, %rax
+    movq $0, %rdx
+    jmp repeat_case
+end_case:
+    ret
+zero_case:
     ret
 
     .globl recursive_power
