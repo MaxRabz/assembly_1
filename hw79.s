@@ -5,6 +5,17 @@
 relation_code:
     # TODO: Problem 1
     movq $0, %rax
+    cmpq %rsi, %rdi
+    jl signed_less
+    jb unsigned_less
+    ret
+signed_less:
+    addq $1, %rax
+    cmpq %rsi, %rdi
+    jb unsigned_less
+    ret
+unsigned_less:
+    addq $2, %rax
     ret
 
     .globl clamp_long
