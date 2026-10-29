@@ -92,7 +92,18 @@ zero_case:
     .type recursive_power, @function
 recursive_power:
     # TODO: Problem 5
-    movq $0, %rax
+    pushq %rbp
+    movq %rsp, %rbp
+    movq $1, %rax
+    cmpq $0, %rsi
+    je base_case
+    subq $8, %rsp
+    movq %rdi, -8(%rbp)
+    subq $1, %rsi
+    call recursive_power
+    imulq -8(%rbp), %rax
+base_case:
+    leave
     ret
 
     .globl combine_helpers
