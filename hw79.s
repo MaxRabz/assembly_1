@@ -23,6 +23,17 @@ unsigned_less:
 clamp_long:
     # TODO: Problem 2
     movq $0, %rax
+    cmpq %rsi, %rdi
+    jl low
+    cmpq %rdx, %rdi
+    jg high
+    movq %rdi, %rax
+    ret
+low:
+    movq %rsi, %rax
+    ret
+high:
+    movq %rdx, %rax
     ret
 
     .globl weighted_sum8
